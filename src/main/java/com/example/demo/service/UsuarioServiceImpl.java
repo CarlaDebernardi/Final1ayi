@@ -57,40 +57,11 @@ public class UsuarioServiceImpl implements IUsuarioService {
             return true;
         }  else{ return false;}
 }
-
-
-*/
+*/ @Override
+  @Transactional
     public Usuario encontrarUsuario2(String nombre, String password) {
         Usuario user = usuarioRepository.findByNombreUsuario(nombre);
-        if (user != null && user.getPassword().equals(password)) {
-        }
         return user;
-
     }
 
-        public ResponseEntity<String> autenticarUsuario(String nombre, String password) {
-            Usuario usuario = usuarioRepository.findByNombreUsuario(nombre);
-
-            if (usuario == null) {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Usuario no encontrado");
-            }
-
-            if (!usuario.getPassword().equals(password)) {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Contraseña incorrecta");
-            }
-
-            return ResponseEntity.status(HttpStatus.OK).body("Autenticación exitosa");
-        }
-
-    @Override
-    @Transactional
-    public Usuario encontrarUsuario3(String nombre, String password) {
-        try {
-            Optional<Usuario> entityOptional = Optional.ofNullable(usuarioRepository.findByNombreUsuario(nombre));
-            if(entityOptional.get() != null && entityOptional.get().getPassword().equals(password));
-            return entityOptional.get();
-        } catch (UsuarioNotFound e) {
-            throw new EmpleadoNotFoundException("El nombre o el password ingresado no corresponden a ningún usuario registrado.");
-        }
-    }
 }

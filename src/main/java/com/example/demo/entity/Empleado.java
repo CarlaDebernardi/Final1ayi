@@ -17,7 +17,8 @@ import java.io.Serializable;
 public class Empleado implements Serializable{
     private static final Long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @NotNull
+    @PositiveOrZero(message = "Debe ingresar un número positivo entero, a partir de 0")
     @Column(name = "legajo")
     private Integer id;
     @NotEmpty
