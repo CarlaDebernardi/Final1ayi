@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 
 import com.example.demo.entity.Empleado;
+import com.example.demo.exception.EmpleadoNotFoundException;
 import com.example.demo.repository.IEmpleadoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @RequiredArgsConstructor
@@ -24,13 +26,14 @@ public class EmpleadoServiceImpl implements IEmpleadoService{
         return empleadoRepository.findAll();
     }
 
-
     @Override
     @Transactional
-    public void eliminar(Integer legajo) {
-        Empleado empleado = empleadoRepository.findByLegajo(legajo);
+    public void eliminar(Integer id) {
+        Empleado empleado = empleadoRepository.getReferenceById(id);
         empleadoRepository.delete(empleado);
     }
+
+
 
     @Override
     @Transactional
@@ -41,10 +44,54 @@ public class EmpleadoServiceImpl implements IEmpleadoService{
 
     @Override
     @Transactional
-    public Empleado encontrarProveedor(Integer legajo) {
-       Empleado empleado = empleadoRepository.findByLegajo(legajo);
-        return empleado;
+    public Empleado encontrarEmpleado2(Integer id) {
+        try {
+            Optional<Empleado> entityOptional = empleadoRepository.findById(id);
+            return entityOptional.get();
+        } catch (EmpleadoNotFoundException e) {
+            throw new EmpleadoNotFoundException("El legajo ingresado no correspondo a ningún empleado registrado.");
+        }
     }
 
+    @Override
+    @Transactional
+    public Empleado modificarEmpleado(Integer id, Empleado empleado){
+        try {
+        Optional <Empleado> optionalEmpleado = Optional.ofNullable(empleadoRepository.getReferenceById(id));
+        Empleado empleadoUpdate = optionalEmpleado.get();
+        if(empleado.getNombre() != null){
+            empleadoUpdate.setNombre(empleado.getNombre());
+        }
+        if(empleado.getApellido() != null){
+            empleadoUpdate.setApellido(empleado.getApellido());
+        }
+        if(empleado.getAntiguedad() != null){
+            empleadoUpdate.setAntiguedad(empleado.getAntiguedad());
+        }
+        if(empleado.getCargo() != null){
+            empleadoUpdate.setCargo(empleado.getCargo());
+        }
+        if(empleado.getSucursal() != null){
+            empleadoUpdate.setSucursal(empleado.getSucursal());
+        }
+        return empleadoRepository.save(empleadoUpdate);
+        } catch (EmpleadoNotFoundException e){
+            throw new EmpleadoNotFoundException("El legajo ingresado no correspondo a ningún empleado registrado.");
+        }
+    }
+
+    @Override
+    @Transactional
+    public List <Empleado> encontrarPorNombre(String nombre){
+        return empleadoRepository.findByNombre(nombre);
+
+    }
+
+    @Override
+    @Transactional
+    public List <Empleado> encontrarPorApellido(String apellido){
+        return empleadoRepository.findByApellido(apellido);
+
+    }
 
 }

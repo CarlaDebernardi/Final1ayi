@@ -4,8 +4,14 @@ import com.example.demo.entity.Empleado;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-@Repository
-public interface IEmpleadoRepository extends JpaRepository {
+import java.util.List;
 
- Empleado findByLegajo (Integer legajo);
+@Repository
+public interface IEmpleadoRepository extends JpaRepository<Empleado, Integer> {
+
+ //Empleado findByLegajo (Integer legajo);
+
+ List <Empleado> findByNombre (String nombre);
+
+ List<Empleado> findByApellido (String apellido);
 }

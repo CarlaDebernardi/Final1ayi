@@ -1,30 +1,36 @@
 package com.example.demo.controller;
 
+import com.example.demo.entity.Usuario;
+import com.example.demo.exception.UsuarioNotFound;
 import com.example.demo.service.IUsuarioService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-@RequiredArgsConstructor
+import org.springframework.web.bind.annotation.*;
+
 @RestController
-@RequestMapping("/")
 public class UsuarioController {
+    IUsuarioService usuarioService;
 
-    @Autowired
-    private IUsuarioService usuarioService;
+    @PostMapping("/ingresar")
+    ResponseEntity<?> ingresar(@RequestParam String nombre, @RequestParam String password)
+{
 
-    @GetMapping("get-user")
-    ResponseEntity<?> getUser(@RequestParam String nombre, @RequestParam String passwordUsuario){
-       try{
-           return ResponseEntity.status(HttpStatus.OK).body(usuarioService.encontrarUsuario(nombre,passwordUsuario));
-       }
-       catch (Exception e){
-           return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-       }
+        Usuario usuario = usuarioService.encontrarUsuario2(nombre, password);
+        if (usuario != null) {
+        return new ResponseEntity<>("Autenticación exitosa", HttpStatus.OK);
+
+        } else {
+        return new ResponseEntity<>("Usuario no encontrado", HttpStatus.NOT_FOUND);
+        }
+
+        }
+        }
+
+           /* return ResponseEntity.status(HttpStatus.OK).body(usuario);
+        } catch (UsuarioNotFound e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+
+        }
     }
-
 }
+*/

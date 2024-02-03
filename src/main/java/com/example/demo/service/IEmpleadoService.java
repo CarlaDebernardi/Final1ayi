@@ -9,13 +9,22 @@ public interface IEmpleadoService {
     @Transactional(readOnly = true)
     List<Empleado> listarEmpleado();
 
-
     @Transactional
-    void eliminar(Integer legajo);
+    void eliminar(Integer id);
 
     @Transactional
     Empleado crearEmpleado(Empleado empleado);
 
+
     @Transactional
-    Empleado encontrarProveedor(Integer legajo);
+    Empleado encontrarEmpleado2(Integer id);
+
+    @Transactional
+    Empleado modificarEmpleado(Integer id, Empleado empleado);
+
+    @Transactional
+    List <Empleado> encontrarPorNombre(String nombre);
+
+    @Transactional
+   List  <Empleado> encontrarPorApellido(String apellido);
 }
