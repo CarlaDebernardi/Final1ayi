@@ -11,8 +11,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
+@RequestMapping("/empleado")
 public class EmpleadoController {
     @Autowired
     public IEmpleadoService empleadoService;
@@ -88,8 +89,8 @@ public class EmpleadoController {
         }
     }
 
-    @DeleteMapping("/delete")
-    public ResponseEntity<?> delete (@RequestParam Integer id) {
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> delete (@PathVariable Integer id) {
         try {
 
             if (id == null || id.describeConstable().isEmpty()) {

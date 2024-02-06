@@ -55,28 +55,29 @@ public class EmpleadoServiceImpl implements IEmpleadoService{
 
     @Override
     @Transactional
-    public Empleado modificarEmpleado(Integer id, Empleado empleado){
-        try {
-        Optional <Empleado> optionalEmpleado = Optional.ofNullable(empleadoRepository.getReferenceById(id));
-        Empleado empleadoUpdate = optionalEmpleado.get();
-        if(empleado.getNombre() != null){
-            empleadoUpdate.setNombre(empleado.getNombre());
-        }
-        if(empleado.getApellido() != null){
-            empleadoUpdate.setApellido(empleado.getApellido());
-        }
-        if(empleado.getAntiguedad() != null){
-            empleadoUpdate.setAntiguedad(empleado.getAntiguedad());
-        }
-        if(empleado.getCargo() != null){
-            empleadoUpdate.setCargo(empleado.getCargo());
-        }
-        if(empleado.getSucursal() != null){
-            empleadoUpdate.setSucursal(empleado.getSucursal());
-        }
-        return empleadoRepository.save(empleadoUpdate);
-        } catch (EmpleadoNotFoundException e){
-            throw new EmpleadoNotFoundException("El legajo ingresado no correspondo a ningún empleado registrado.");
+    public Empleado modificarEmpleado(Integer id, Empleado empleado) {
+            Optional<Empleado> optionalEmpleado = empleadoRepository.findById(id);
+            if (optionalEmpleado.isPresent()) {
+                Empleado empleadoUpdate = optionalEmpleado.get();
+                if (empleado.getNombre() != null) {
+                    empleadoUpdate.setNombre(empleado.getNombre());
+                }
+                if (empleado.getApellido() != null) {
+                    empleadoUpdate.setApellido(empleado.getApellido());
+                }
+                if (empleado.getAntiguedad() != null) {
+                    empleadoUpdate.setAntiguedad(empleado.getAntiguedad());
+                }
+                if (empleado.getCargo() != null) {
+                    empleadoUpdate.setCargo(empleado.getCargo());
+                }
+                if (empleado.getSucursal() != null) {
+                    empleadoUpdate.setSucursal(empleado.getSucursal());
+                }
+                return empleadoRepository.save(empleadoUpdate);
+            }else {
+                throw new EmpleadoNotFoundException("El legajo ingresado no correspondo a ningún empleado registrado.");
+
         }
     }
 

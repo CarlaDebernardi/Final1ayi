@@ -13,8 +13,8 @@ public class UsuarioController {
     @Autowired
     IUsuarioService usuarioService;
 
-    @PostMapping("/ingresar")
-    ResponseEntity<?> ingresar(@RequestParam String nombre, @RequestParam String password) {
+    @PostMapping("/ingresar/{nombre}/{password}")
+    ResponseEntity<?> ingresar(@PathVariable String nombre, @PathVariable String password) {
         Usuario usuario = usuarioService.encontrarUsuario2(nombre, password);
         if (usuario != null && usuario.getPassword().equals(password)) {
         return new ResponseEntity<>("Autenticación exitosa", HttpStatus.OK);
