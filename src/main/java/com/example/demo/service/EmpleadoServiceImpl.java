@@ -81,18 +81,5 @@ public class EmpleadoServiceImpl implements IEmpleadoService{
         }
     }
 
-    @Override
-    @Transactional
-    public List <Empleado> encontrarPorNombre(String nombre){
-        return empleadoRepository.findByNombre(nombre);
-
-    }
-
-    @Override
-    @Transactional
-    public List <Empleado> encontrarPorApellido(String apellido){
-        return empleadoRepository.findByApellido(apellido);
-
-    }
 
 }

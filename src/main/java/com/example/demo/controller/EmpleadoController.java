@@ -31,18 +31,7 @@ public class EmpleadoController {
         }
     }
 
-    @GetMapping("/get-name")
-    public ResponseEntity<?> encontrarPorNombre(@RequestParam String nombre) {
-       List <Empleado> empleado = empleadoService.encontrarPorNombre(nombre);
-        try {
-            if (empleado == null) {
-                return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-            }
-            return ResponseEntity.ok(empleado);
-        } catch (ResponseStatusException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        }
-    }
+
     @GetMapping("/get-one/{id}")
     public ResponseEntity<?> encontrarPorLegajo(@PathVariable Integer id) {
         try {
@@ -52,18 +41,7 @@ public class EmpleadoController {
         }
     }
 
-    @GetMapping("/get-lastName")
-    public ResponseEntity<?> encontrarPorApellido(@RequestParam String apellido) {
-        List<Empleado> empleados = empleadoService.encontrarPorApellido(apellido);
-        try {
-            if (empleados == null) {
-                return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-            }
-            return ResponseEntity.ok(empleados);
-        } catch (ResponseStatusException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        }
-    }
+
 
     @PostMapping("/save")
     public ResponseEntity<?> save(@Valid @RequestBody Empleado empleado) {

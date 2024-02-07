@@ -22,9 +22,4 @@ public interface IEmpleadoService {
     @Transactional
     Empleado modificarEmpleado(Integer id, Empleado empleado);
 
-    @Transactional
-    List <Empleado> encontrarPorNombre(String nombre);
-
-    @Transactional
-   List  <Empleado> encontrarPorApellido(String apellido);
 }
